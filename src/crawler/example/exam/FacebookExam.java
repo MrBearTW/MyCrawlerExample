@@ -35,7 +35,7 @@ public class FacebookExam {
 				.getFromJson(uri)
 				.select("data");
 		
-		String output = "id,reactions";
+		String output = "亞洲大獎後首篇的Total Reactions=";
 
 		// 遂筆處理
 		for( Element data: elems ){
@@ -45,7 +45,7 @@ public class FacebookExam {
 			String reactions = data.select("reactions summary total_count").text();
 
 
-			output +=id + "," + reactions + "\n";
+			output +=reactions + "\n";
 
 		}
 
