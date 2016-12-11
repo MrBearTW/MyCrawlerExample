@@ -2,6 +2,9 @@ package crawler.example.exam;
 
 import com.github.abola.crawler.CrawlerPack;
 import org.apache.commons.logging.impl.SimpleLog;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 
 /**
  * 爬蟲包程式的全貌，就只有這固定的模式
@@ -20,14 +23,13 @@ public class PTTtryExample {
 		CrawlerPack.setLoggerLevel(SimpleLog.LOG_LEVEL_OFF);
 
 		// 遠端資料路徑
-		String uri = "https://www.ptt.cc/bbs/Beauty/M.1481203900.A.256.html";
+		String uri = "https://www.ptt.cc/bbs/Gossiping/M.1481337220.A.4E5.html";
 //				"tar:gz:http://crawler:12345678@128.199.204.20:8080"
 //				+ "/httpLogin/download.tar.gz"
 //				+ "!download.tar"
 //				+ "!/path/data";
 
-		System.out.println(
-				CrawlerPack.start()
+		Document jsoup=CrawlerPack.start()
 				
 				// 參數設定
 			    .addCookie("over18","1")	// 設定cookie
@@ -35,12 +37,18 @@ public class PTTtryExample {
 				
 				// 選擇資料格式 (三選一)
 				//.getFromJson(uri)
-			    .getFromHtml(uri)
+			    .getFromHtml(uri);
 			    //.getFromXml(uri)
 			    
 			    // 這兒開始是 Jsoup Document 物件操作
-			    //.select(".css .selector ")
+			    //.select(".css r.selector ")
 
-		);
+
+		for(Element elem : jsoup.select("#main-content *")){
+			elem.remove();
+			//System.out.println(elem.toString());
+		}
+		System.out.println(jsoup.select("#main-content").text());
+		//System.out.println(CrawlerPack.start().getFromHtml(uri).select("#main-contect*"));
 	}
 }
